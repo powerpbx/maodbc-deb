@@ -1,0 +1,15 @@
+maodbc (3.0.3-0osso1) stretch; urgency=low
+
+  * Build for stretch.
+  * Add download/make of mariadb-connector-c-3.0.3-src.tar.gz as part
+    of the build step.
+  * Per default, we statically link the mariadb-connector-c using
+    MARIADB_LINK_DYNAMIC. This makes sense as there is no dynamic
+    library packaged for debian/stretch for this version.
+  * Add symlink to libmyodbc.so so it can be used interchangeably with
+    the original libmyodbc without you needing to update odbcinst.ini.
+  * TODO: Add hardened flags / etc. to the mariadb-connector-c build.
+  * TODO: Check the odbcinst.ini flags (like Threading=0) and whether
+    they work here.
+
+ -- Walter Doekes (work) <wjdoekes@osso.nl>  Tue, 27 Feb 2017 19:00:31 +0100

@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+
+MARIADB_CONNECTOR_C := mariadb-connector-c-3.0.3-src.tar.gz
+MARIADB_CONNECTOR_C_MD5 := 666df28c42988cedc3dec1e1c0da5212
+MARIADB_CONNECTOR_C_URL := https://downloads.mariadb.com/Connectors/c/connector-c-3.0.3/mariadb-connector-c-3.0.3-src.tar.gz
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@ --with autoreconf
+
+vendor/$(MARIADB_CONNECTOR_C):
+	mkdir -p vendor/
+	if wget -O vendor/$(MARIADB_CONNECTOR_C) "$(MARIADB_CONNECTOR_C_URL)"; then \
+		ret=$$(md5sum vendor/$(MARIADB_CONNECTOR_C)); \
+		if ! test $${ret% *} = $(MARIADB_CONNECTOR_C_MD5); then \
+			echo "MD5 mismatch: $${ret% *} <> $(MARIADB_CONNECTOR_C_MD5)" >&2; \
+			$(RM) vendor/$(MARIADB_CONNECTOR_C); \
+			false; \
+		fi; \
+	fi
+
+vendor/mariadb-connector-c: vendor/$(MARIADB_CONNECTOR_C)
+	mkdir -p vendor/mariadb-connector-c
+	if ! tar --strip-components=1 -C vendor/mariadb-connector-c -zxf vendor/$(MARIADB_CONNECTOR_C); then \
+		$(RM) -r vendor/mariadb-connector-c; \
+		false; \
+	fi
+
+mariadb-connector-c: vendor/mariadb-connector-c
+	cd vendor/mariadb-connector-c/cmake && cmake ..
+	cd vendor/mariadb-connector-c/cmake && make
+	cp -a vendor/mariadb-connector-c/cmake/include/mariadb_version.h vendor/mariadb-connector-c/include/
+
+override_dh_auto_configure: mariadb-connector-c
+	dh_auto_configure -- \
+	    -DMARIADB_INCLUDE_DIR=$(CURDIR)/vendor/mariadb-connector-c/include \
+	    -DMARIADB_CLIENT_DEPENDENCIES="$$(vendor/mariadb-connector-c/cmake/mariadb_config/mariadb_config --libs_sys)" \
+	    -DMARIADB_LIBRARY_DIR=$(CURDIR)/vendor/mariadb-connector-c/cmake/libmariadb
+
+override_dh_auto_install:
+	dh_auto_install -- DESTDIR=$(CURDIR)/debian/tmp
+	mv $(CURDIR)/debian/tmp/usr/share/doc/mariadb_connector_odbc $(CURDIR)/debian/tmp/usr/share/doc/libmaodbc
+	mkdir -p $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/odbc
+	mv $(CURDIR)/debian/tmp/usr/lib/libmaodbc.so $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/odbc/
+	ln -s libmaodbc.so $(CURDIR)/debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/odbc/libmyodbc.so
+
+override_dh_shlibdeps:
+	dh_shlibdeps -- -v

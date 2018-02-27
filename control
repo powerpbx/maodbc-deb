@@ -1,0 +1,21 @@
+Source: maodbc
+Section: libs
+Priority: optional
+Maintainer: Walter Doekes (work) <wjdoekes@osso.nl>
+Standards-Version: 3.9.2
+Build-Depends: debhelper (>= 8.9.4), libmariadb-dev (>= 2.3.2), libmariadbclient-dev (>= 10.1.26), unixodbc-dev (>= 2.2.11), cmake (>= 3.7)
+Homepage: https://downloads.mariadb.org/connector-odbc/
+
+Package: libmaodbc
+Section: libs
+Architecture: any
+Multi-Arch: same
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Recommends: libodbc1 | libiodbc2
+Conflicts: libmyodbc
+Breaks: unixodbc (<< 2.2.14p2-3), odbcinst1debian2 (<< 2.2.14p2-3), libiodbc2 (<< 3.52.7-3~)
+Description: the MariaDB SQL ODBC driver
+ This package allows you to connect to MariaDB/MySQL database servers using
+ ODBC, the Open Database Connectivity abstraction layer which is
+ understood by a variety of database tools that cannot talk to MariaDB/MySQL
+ databases directly.

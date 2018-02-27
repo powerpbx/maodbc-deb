@@ -1,0 +1,10 @@
+Template: libmaodbc/addtoodbc
+Type: boolean
+Default: false
+Description: Do you want MaODBC to be registered as an ODBC driver?
+ You appear to have an ODBC manager (unixodbc or iODBC) installed on your
+ system.
+ .
+ If you wish, MaODBC will be automatically added as an ODBC driver now and
+ will be automatically deleted from the list when you remove the libmaodbc
+ package, using the /usr/bin/odbcinst utility from unixodbc.

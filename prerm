@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -e
+
+# Source debconf library.
+. /usr/share/debconf/confmodule
+
+db_version 2.0
+
+# See templates file for libmaodbc/addtoodbc question.
+db_get libmaodbc/addtoodbc || true
+if [ "$RET" = "true" ]; then
+	odbcinst -u -d -n MySQL
+fi
+
+#DEBHELPER#
