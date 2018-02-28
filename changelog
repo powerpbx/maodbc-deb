@@ -9,7 +9,5 @@ maodbc (3.0.3-0osso2) stretch; urgency=low
   * Add symlink to libmyodbc.so so it can be used interchangeably with
     the original libmyodbc without you needing to update odbcinst.ini.
   * TODO: Add hardened flags / etc. to the mariadb-connector-c build.
-  * TODO: Check the odbcinst.ini flags (like Threading=0) and whether
-    they work here.
 
  -- Walter Doekes (work) <wjdoekes@osso.nl>  Wed, 28 Feb 2017 10:40:12 +0100
