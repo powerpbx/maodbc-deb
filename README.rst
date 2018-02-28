@@ -22,8 +22,19 @@ Optionally alter ``debian/changelog`` and then build::
     dpkg-buildpackage -us -uc -sa
 
 
+Docker build
+------------
+
+Or you can just do::
+
+    ./Docker.build
+
+And it will create the build files in ``Docker.output/``.
+
+
 TODO
 ----
 
-* Make (reproducible) build with docker.
+* Make reproducible build? Right now a second build yields different
+  binaries.
 * Add hardened/other flags to inner mariadb-connector-c build.

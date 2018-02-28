@@ -1,4 +1,4 @@
-maodbc (3.0.3-0osso1) stretch; urgency=low
+maodbc (3.0.3-0osso2) stretch; urgency=low
 
   * Build for stretch.
   * Add download/make of mariadb-connector-c-3.0.3-src.tar.gz as part
@@ -12,4 +12,4 @@ maodbc (3.0.3-0osso1) stretch; urgency=low
   * TODO: Check the odbcinst.ini flags (like Threading=0) and whether
     they work here.
 
- -- Walter Doekes (work) <wjdoekes@osso.nl>  Tue, 27 Feb 2017 19:00:31 +0100
+ -- Walter Doekes (work) <wjdoekes@osso.nl>  Wed, 28 Feb 2017 10:40:12 +0100
