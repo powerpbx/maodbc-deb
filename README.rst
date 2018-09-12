@@ -4,14 +4,14 @@ OSSO build of the maodbc.so MariaDB SQL ODBC Connector
 Get source::
 
     # Get source from https://downloads.mariadb.org/connector-odbc/
-    # and rename to myodbc_VERSION.orig.tar.gz; e.g.:
-    wget -O maodbc_3.0.3.orig.tar.gz \
-      https://downloads.mariadb.com/Connectors/odbc/connector-odbc-3.0.3/mariadb-connector-odbc-3.0.3-ga-src.tar.gz
-    # 3.0.3 has md5sum dcea2a6b1aceacc6d969bb17b5919e07
+    # and rename to maodbc_VERSION.orig.tar.gz; e.g.:
+    wget -O maodbc_3.0.6.orig.tar.gz \
+      https://downloads.mariadb.com/Connectors/odbc/connector-odbc-3.0.6/mariadb-connector-odbc-3.0.6-ga-src.tar.gz
+    # 3.0.6 has md5sum 6e16ed523732dbf3df6bc0ece3aa73de
 
     # Extract:
-    tar zxf maodbc_3.0.3.orig.tar.gz 
-    cd mariadb-connector-odbc-3.0.3-ga-src
+    tar zxf maodbc_3.0.6.orig.tar.gz
+    cd mariadb-connector-odbc-3.0.6-ga-src
 
 Setup ``debian/`` dir::
 
@@ -35,6 +35,7 @@ And it will create the build files in ``Docker.output/``.
 TODO
 ----
 
-* Make reproducible build? Right now a second build yields different
-  binaries.
-* Add hardened/other flags to inner mariadb-connector-c build.
+* Add basic tests at the end of the docker build.
+* Check the odbcinst.ini flags (like Threading=0) and whether they
+  actually do anything in the maodbc driver.
+* Check that the SSL we compiled against actually works.

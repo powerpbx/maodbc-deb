@@ -1,8 +1,11 @@
 #!/usr/bin/make -f
 
-MARIADB_CONNECTOR_C := mariadb-connector-c-3.0.3-src.tar.gz
-MARIADB_CONNECTOR_C_MD5 := 666df28c42988cedc3dec1e1c0da5212
-MARIADB_CONNECTOR_C_URL := https://downloads.mariadb.com/Connectors/c/connector-c-3.0.3/mariadb-connector-c-3.0.3-src.tar.gz
+buildversion := $(shell sed -e '1!d;s/.*(//;s/).*//' debian/changelog)
+upversion := $(shell echo "$(buildversion)" | sed -e 's/-.*//')
+
+MARIADB_CONNECTOR_C := mariadb-connector-c-$(upversion)-src.tar.gz
+MARIADB_CONNECTOR_C_MD5 := 81c85d8fc696ee65046c0d29b67201be
+MARIADB_CONNECTOR_C_URL := https://downloads.mariadb.com/Connectors/c/connector-c-$(upversion)/$(MARIADB_CONNECTOR_C)
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
 
@@ -27,16 +30,22 @@ vendor/mariadb-connector-c: vendor/$(MARIADB_CONNECTOR_C)
 		false; \
 	fi
 
+.PHONY: mariadb-connector-c
 mariadb-connector-c: vendor/mariadb-connector-c
-	cd vendor/mariadb-connector-c/cmake && cmake ..
-	cd vendor/mariadb-connector-c/cmake && make
-	cp -a vendor/mariadb-connector-c/cmake/include/mariadb_version.h vendor/mariadb-connector-c/include/
+	# Let the connector-odbc trigger the compilation. Should
+	# hopefully pass all our harden flags along as well.
+	#cd vendor/mariadb-connector-c/cmake && cmake ..
+	#cd vendor/mariadb-connector-c/cmake && make
+	#cp -a vendor/mariadb-connector-c/cmake/include/mariadb_version.h vendor/mariadb-connector-c/include/
 
-override_dh_auto_configure: mariadb-connector-c
-	dh_auto_configure -- \
-	    -DMARIADB_INCLUDE_DIR=$(CURDIR)/vendor/mariadb-connector-c/include \
-	    -DMARIADB_CLIENT_DEPENDENCIES="$$(vendor/mariadb-connector-c/cmake/mariadb_config/mariadb_config --libs_sys)" \
-	    -DMARIADB_LIBRARY_DIR=$(CURDIR)/vendor/mariadb-connector-c/cmake/libmariadb
+libmariadb: mariadb-connector-c
+	# Since 3.0.4/3.0.5/3.0.6 connector-odbc expects connector-c to
+	# be in the libmariadb subdir. Previously the paths were passed
+	# with MARIADB_* vars.
+	ln -s vendor/mariadb-connector-c libmariadb
+
+override_dh_auto_configure: libmariadb
+	dh_auto_configure
 
 override_dh_auto_install:
 	dh_auto_install -- DESTDIR=$(CURDIR)/debian/tmp

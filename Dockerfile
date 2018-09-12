@@ -5,7 +5,7 @@ MAINTAINER Walter Doekes <wjdoekes+maodbc@osso.nl>
 # yet. Use a hack to s/debian:stretch/debian:OTHER/g above instead.
 ARG codename=stretch
 # --build-args with examples
-# upversion=3.0.3, buildversion=3.0.3-0osso1
+# upversion=3.0.6, buildversion=3.0.6-0osso1+deb9
 ARG upversion
 ARG buildversion
 
@@ -23,46 +23,30 @@ RUN apt-get install -y \
     ca-certificates curl wget \
     build-essential dpkg-dev quilt dh-autoreconf binutils-dev \
     unixodbc-dev cmake
+# Optional for ssl. Using libssl1.0-dev for Debian/Stretch instead of
+# libssl-dev (1.1) because the Asterisken we use this on are also pinned
+# to 1.0.2 because of reasons. (
+RUN apt-get install -y libssl1.0-dev
 
 RUN mkdir -p /build
 RUN curl --fail "https://downloads.mariadb.com/Connectors/odbc/connector-odbc-${upversion}/mariadb-connector-odbc-${upversion}-ga-src.tar.gz" \
     >/build/maodbc_${upversion}.orig.tar.gz
 RUN cd /build && \
-    mkdir myodbc-${upversion} && \
-    tar --strip-components=1 -C myodbc-${upversion} -zxf "maodbc_${upversion}.orig.tar.gz" && \
-    mkdir /build/myodbc-${upversion}/debian
-COPY . /build/myodbc-${upversion}/debian/
-WORKDIR /build/myodbc-${upversion}
+    mkdir maodbc-${upversion} && \
+    tar --strip-components=1 -C maodbc-${upversion} -zxf "maodbc_${upversion}.orig.tar.gz" && \
+    mkdir /build/maodbc-${upversion}/debian
+COPY . /build/maodbc-${upversion}/debian/
+WORKDIR /build/maodbc-${upversion}
 RUN dpkg-buildpackage -us -uc -sa
 
 # TODO: for bonus points, we could run quick tests here;
 # for starters dpkg -i tests?
 
-## TODO: check/update changelog!
-## TODO: add timestamp and lsb_release code into version; but we must
-##   ensure that the extra version bits are not propagated into the
-##   User-Agent string because we don't want info leaks + not all SIP
-##   servers accept all characters in the User-Agent/Server header.
-##   right now it's not clear when we have a 11vg18 whether it's for
-##   jessie or wheezy and we don't know when it was built (if there were
-##   multiple builds)
-## TODO: sign build.
-## TODO: remove the codec_g729a.so download?
-#RUN apt-get install -y asterisk-core-sounds-en-gsm
-#RUN cd /build && dpkg -i \
-#    asterisk_${astversion}-${vgversion}_amd64.deb \
-#    asterisk-config_${astversion}-${vgversion}_all.deb \
-#    asterisk-dev_${astversion}-${vgversion}_all.deb \
-#    asterisk-dbg_${astversion}-${vgversion}_amd64.deb \
-#    asterisk-modules_${astversion}-${vgversion}_amd64.deb \
-#    asterisk-voicemail_${astversion}-${vgversion}_amd64.deb
-
-
 # /Docker.output must be mounted already.
 ENV codename=${codename} upversion=${upversion} buildversion=${buildversion}
-CMD echo && mkdir /Docker.output/${codename}/myodbc_${buildversion} && \
-    mv /build/*${buildversion}* /Docker.output/${codename}/myodbc_${buildversion}/ && \
-    mv /build/maodbc_${upversion}.orig.tar.gz /Docker.output/${codename}/myodbc_${buildversion}/ && \
+CMD echo && mkdir /Docker.output/${codename}/maodbc_${buildversion} && \
+    mv /build/*${buildversion}* /Docker.output/${codename}/maodbc_${buildversion}/ && \
+    mv /build/maodbc_${upversion}.orig.tar.gz /Docker.output/${codename}/maodbc_${buildversion}/ && \
     chown -R ${UID}:root /Docker.output/${codename} && \
-    cd / && find Docker.output/${codename}/myodbc_${buildversion} -type f && \
+    cd / && find Docker.output/${codename}/maodbc_${buildversion} -type f && \
     echo && echo 'Output files created succesfully'

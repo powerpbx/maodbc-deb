@@ -1,3 +1,14 @@
+maodbc (3.0.6-0osso1+deb9) stretch; urgency=low
+
+  * New upstream release 3.0.6.
+  * Rename Docker-built package to maodbc* instead of myodbc*.
+  * Enable SSL support.
+  * Simplify patches/rules, it builds libmariadb automatically now.
+  * Move TODOs from changelog to README.rst.
+  * Build is now reproducible!
+
+ -- Walter Doekes (work) <wjdoekes@osso.nl>  Wed, 12 Sep 2018 17:37:10 +0200
+
 maodbc (3.0.3-0osso2) stretch; urgency=low
 
   * Build for stretch.
@@ -8,6 +19,5 @@ maodbc (3.0.3-0osso2) stretch; urgency=low
     library packaged for debian/stretch for this version.
   * Add symlink to libmyodbc.so so it can be used interchangeably with
     the original libmyodbc without you needing to update odbcinst.ini.
-  * TODO: Add hardened flags / etc. to the mariadb-connector-c build.
 
- -- Walter Doekes (work) <wjdoekes@osso.nl>  Wed, 28 Feb 2017 10:40:12 +0100
+ -- Walter Doekes (work) <wjdoekes@osso.nl>  Wed, 28 Feb 2018 10:40:12 +0100

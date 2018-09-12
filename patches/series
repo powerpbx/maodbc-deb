@@ -1,3 +1,1 @@
-readme-version.patch
 include-wctype-h.patch
-extra-libmariadbclient-deps.patch
