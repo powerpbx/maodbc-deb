@@ -7,7 +7,7 @@ maodbc (3.0.6-1+deb9) stretch; urgency=low
   * Move TODOs from changelog to README.rst.
   * Build is now reproducible!
 
- -- PowerPBX <devops@powerpbx.org>  Fri, 28 Dec 2018 17:24:14: -0800
+ -- PowerPBX <devops@powerpbx.org>  Fri, 28 Dec 2018 17:24:14 -0800
 
 maodbc (3.0.6-0+deb9) stretch; urgency=low
 
