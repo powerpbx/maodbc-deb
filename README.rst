@@ -15,7 +15,7 @@ Get source::
 
 Setup ``debian/`` dir::
 
-    git clone https://github.com/ossobv/maodbc-deb.git debian
+    git clone -b artemis20 https://github.com/powerpbx/maodbc-deb.git debian
 
 Optionally alter ``debian/changelog`` and then build::
 
@@ -25,6 +25,5 @@ Optionally alter ``debian/changelog`` and then build::
 TODO
 ----
 
-* Check the odbcinst.ini flags (like Threading=0) and whether they
-  actually do anything in the maodbc driver.
+* Check if odbcinst.ini is necessary since that is installed by ivozprovider artemis
 * Check that the SSL we compiled against actually works.
