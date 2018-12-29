@@ -1,4 +1,0 @@
-.dockerignore
-Docker.build
-Docker.output/**
-Dockerfile

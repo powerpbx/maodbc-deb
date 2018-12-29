@@ -1,4 +1,4 @@
-OSSO build of the maodbc.so MariaDB SQL ODBC Connector
+PowerPBX build of the maodbc.so MariaDB SQL ODBC Connector
 ======================================================
 
 Get source::
@@ -22,20 +22,9 @@ Optionally alter ``debian/changelog`` and then build::
     dpkg-buildpackage -us -uc -sa
 
 
-Docker build
-------------
-
-Or you can just do::
-
-    ./Docker.build
-
-And it will create the build files in ``Docker.output/``.
-
-
 TODO
 ----
 
-* Add basic tests at the end of the docker build.
 * Check the odbcinst.ini flags (like Threading=0) and whether they
   actually do anything in the maodbc driver.
 * Check that the SSL we compiled against actually works.

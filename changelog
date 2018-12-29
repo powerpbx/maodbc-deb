@@ -1,4 +1,15 @@
-maodbc (3.0.6-0osso1+deb9) stretch; urgency=low
+maodbc (3.0.6-1+deb9) stretch; urgency=low
+
+  * New upstream release 3.0.6.
+  * Rename Docker-built package to maodbc* instead of myodbc*.
+  * Enable SSL support.
+  * Simplify patches/rules, it builds libmariadb automatically now.
+  * Move TODOs from changelog to README.rst.
+  * Build is now reproducible!
+
+ -- PowerPBX <devops@powerpbx.org>  Fri, 28 Dec 2018 17:24:14: -0800
+
+maodbc (3.0.6-0+deb9) stretch; urgency=low
 
   * New upstream release 3.0.6.
   * Rename Docker-built package to maodbc* instead of myodbc*.
