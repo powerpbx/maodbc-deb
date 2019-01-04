@@ -7,7 +7,7 @@ Get source::
     # and rename to maodbc_VERSION.orig.tar.gz; e.g.:
     wget -O maodbc_3.0.8.orig.tar.gz \
       https://downloads.mariadb.com/Connectors/odbc/connector-odbc-3.0.8/mariadb-connector-odbc-3.0.8-ga-src.tar.gz
-    # 3.0.8 has md5sum bb147370ecdbdee8f738664353d154e3
+    # 3.0.8 has md5sum 697acdd64ea4c93e8e828ff7e453ef4c
 
     # Extract:
     tar zxf maodbc_3.0.8.orig.tar.gz

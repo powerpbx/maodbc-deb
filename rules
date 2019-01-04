@@ -4,7 +4,7 @@ buildversion := $(shell sed -e '1!d;s/.*(//;s/).*//' debian/changelog)
 upversion := $(shell echo "$(buildversion)" | sed -e 's/-.*//')
 
 MARIADB_CONNECTOR_C := mariadb-connector-c-$(upversion)-src.tar.gz
-MARIADB_CONNECTOR_C_MD5 := bb147370ecdbdee8f738664353d154e3
+MARIADB_CONNECTOR_C_MD5 := 697acdd64ea4c93e8e828ff7e453ef4c
 MARIADB_CONNECTOR_C_URL := https://downloads.mariadb.com/Connectors/c/connector-c-$(upversion)/$(MARIADB_CONNECTOR_C)
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
