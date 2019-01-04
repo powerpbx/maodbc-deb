@@ -1,3 +1,9 @@
+maodbc (3.0.8-0+deb9) stretch; urgency=low
+
+  * New upstream release 3.0.8.
+
+ -- PowerPBX <devops@powerpbx.org>  Fri, 04 Jan 2019 12:31:10 -0800
+
 maodbc (3.0.6-1+deb9) stretch; urgency=low
 
   * New upstream release 3.0.6.
