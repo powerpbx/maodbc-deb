@@ -5,13 +5,13 @@ Get source::
 
     # Get source from https://downloads.mariadb.org/connector-odbc/
     # and rename to maodbc_VERSION.orig.tar.gz; e.g.:
-    wget -O maodbc_3.0.6.orig.tar.gz \
-      https://downloads.mariadb.com/Connectors/odbc/connector-odbc-3.0.6/mariadb-connector-odbc-3.0.6-ga-src.tar.gz
-    # 3.0.6 has md5sum 6e16ed523732dbf3df6bc0ece3aa73de
+    wget -O maodbc_3.0.8.orig.tar.gz \
+      https://downloads.mariadb.com/Connectors/odbc/connector-odbc-3.0.8/mariadb-connector-odbc-3.0.8-ga-src.tar.gz
+    # 3.0.8 has md5sum bb147370ecdbdee8f738664353d154e3
 
     # Extract:
-    tar zxf maodbc_3.0.6.orig.tar.gz
-    cd mariadb-connector-odbc-3.0.6-ga-src
+    tar zxf maodbc_3.0.8.orig.tar.gz
+    cd mariadb-connector-odbc-3.0.8-ga-src
 
 Setup ``debian/`` dir::
 
